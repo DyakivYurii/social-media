@@ -1,0 +1,16 @@
+.grid-container {
+    display: block;
+    position: relative;
+    background-color: #303030;
+    width: 200px;
+    height: 200px;
+    /* overflow: hidden; */
+}
+
+.grid-item {
+    position: absolute;
+    background-color: #505050;
+    width: 80px;
+    height: 80px;
+    z-index: 100;
+}
