@@ -8,12 +8,24 @@ import './UsersGrid.css';
 import users from '../../constants/config';
 
 class UsersGrig extends React.Component {
-    constructor(props) {
+    constructor(props) {        
         super(props);
+
+        this.referenceGrid = React.createRef();
         this.state = {}
         this.matrixGridScreen = [];
 
         this.calculateGridPosition(2);
+    }
+
+    componentDidMount() {
+        window.addEventListener('resize', this.getScreenSize);
+        // this.referenceGrid.current.addEventListener('resize', this.getScreenSize);
+    }
+
+    componentWillUnmount() {
+        // this.referenceGrid.current.removeEventListener(this.getScreenSize);
+        window.removeEventListener(this.getScreenSize);
     }
 
     calculateGridPosition(cashingLevel = 1) {
@@ -38,10 +50,14 @@ class UsersGrig extends React.Component {
         });
     }
 
-    buildIconGrid
+    getScreenSize() {
+        console.log(`We have resized screen`);
+        console.log(`This is referenced element`, this.referenceGrid);
+        return { height: window.innerHeight, width: window.innerWidth };
+    }
 
     render() {
-        return <div className='grid-container'>
+        return <div ref={this.referenceGrid} className='grid-container'>
                 {/* { this.buildGrid() } */}
             </div>
     }

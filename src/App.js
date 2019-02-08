@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import UsersGrid from './containers/UsersGrid/UsersGrid'
+import ScreensGrid from './containers/ScreensGrid/ScreensGrid';
+import UsersGrid from './containers/UsersGrid/UsersGrid';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <UsersGrid />
-        </header>
-      </div>
+      <React.Fragment>
+        {/* <div className="App">
+          <header className="App-header"><UsersGrid /></header>
+        </div> */}
+        <ScreensGrid />
+      </React.Fragment>
     );
   }
 }
