@@ -1,6 +1,6 @@
 import React from 'react';
 
-import ScreenItem from './ScreenItem';
+import ScreenItem from '../../components/ScreenItem/ScreenItem';
 
 import './ScreensGrid.css';
 
@@ -23,12 +23,14 @@ class ScreensGrid extends React.Component {
   componentDidMount() {
     this.calculateScreensCoordinates(2);
     this.setScreenSize();
+    // window.addEventListener('resize', this.listenGetUserScreenSize);
     this.referenseScreenGrid.current.addEventListener('mousedown', this.listenMouseDown);
     this.referenseScreenGrid.current.addEventListener('mouseup', this.listenMouseUp);
     this.referenseScreenGrid.current.addEventListener('mousemove', this.listenMouseMove);
   }
 
   componentWillUnmount() {
+    // window.removeEventListener(this.getScreenSize);
     this.referenseScreenGrid.current.removeEventListener(this.listenMouseDown);
     this.referenseScreenGrid.current.removeEventListener(this.listenMouseUp);
     this.referenseScreenGrid.current.removeEventListener(this.listenMouseMove);
@@ -51,6 +53,10 @@ class ScreensGrid extends React.Component {
 
     this.setState({ screensCoordinates });
   }
+
+  // listenGetUserScreenSize() {
+  //   return { height: window.innerHeight, width: window.innerWidth };
+  // }
 
   listenMouseDown = (event) => {
     this.setState({
@@ -115,7 +121,6 @@ class ScreensGrid extends React.Component {
               );
             });
           })}
-          {/* <p>some texxt</p> */}
         </section>
       </React.Fragment>
     );

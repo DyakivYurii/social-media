@@ -1,67 +1,65 @@
 import React from 'react';
 
-import GridItem from '../../components/UsersGrid/GridItem';
+import UserItem from '../../components/UserItem/UserItem';
 
-import './UsersGrid.css';
+class UsersGrid extends React.Component {
+  constructor() {
+    super();
 
-class UsersGrig extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.referenceGrid = React.createRef();
-    this.state = {};
-    this.matrixGridScreen = [];
-
-    this.calculateGridPosition(2);
+    this.state = {
+      usersCoordinations: [],
+      rowAmong: 0,
+      columnAmong: 0
+    };
   }
 
+  // Here is potenthial place for optimization
+  // Maybe we can pass numbers of rows using some global variables or somethin like that
   componentDidMount() {
-    window.addEventListener('resize', this.getScreenSize);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener(this.getScreenSize);
-  }
-
-  calculateGridPosition(cashingLevel = 1) {
-    if (cashingLevel < 1) {
-      cashingLevel = 1;
+    if (window.innerWidth >= 992) {
+      this.buildGreed(3, 4);
+      this.setState({ rowAmong: 3, columnAmong: 4 });
+    } else {
+      this.buildGreed(3, 3);
+      this.setState({ rowAmong: 3, columnAmong: 3 });
     }
+  }
 
-    for (let rowIndex = -cashingLevel; rowIndex <= cashingLevel; rowIndex++) {
-      const column = [];
-      for (let columnIndex = -cashingLevel; columnIndex <= cashingLevel; columnIndex++) {
-        column.push({ rowIndex, columnIndex });
+  buildGreed(row, column) {
+    // const screenHeight = window.innerHeight;
+    // const screenWidth = window.innerWidth;
+
+    let usersCoordinates = [];
+
+    for (let currentRow = 0; currentRow < row; currentRow++) {
+      let rowUsersGrid = [];
+      for (let currentColumn = 0; currentColumn < column; currentColumn++) {
+        rowUsersGrid.push({ row: currentRow, column: currentColumn });
       }
-      this.matrixGridScreen.push(column);
+      usersCoordinates.push(rowUsersGrid);
     }
-  }
 
-  buildGrid() {
-    return this.matrixGridScreen.map((currentRow) => {
-      return currentRow.map((currentElement) => {
-        return (
-          <GridItem
-            key={`${currentElement.rowIndex}${currentElement.columnIndex}`}
-            rowIndex={currentElement.rowIndex}
-            columnIndex={currentElement.columnIndex}
-          />
-        );
-      });
-    });
-  }
-
-  getScreenSize() {
-    return { height: window.innerHeight, width: window.innerWidth };
+    this.setState({ usersCoordinations: usersCoordinates });
   }
 
   render() {
     return (
-      <div ref={this.referenceGrid} className="grid-container">
-        {/* { this.buildGrid() } */}
-      </div>
+      <React.Fragment>
+        {this.state.usersCoordinations.map((currentRow) => {
+          return currentRow.map((currentUser) => {
+            return (
+              <UserItem
+                key={`${currentUser.row}${currentUser.column}`}
+                positions={currentUser}
+                rowAmong={this.state.rowAmong}
+                columnAmong={this.state.columnAmong}
+              />
+            );
+          });
+        })}
+      </React.Fragment>
     );
   }
 }
 
-export default UsersGrig;
+export default UsersGrid;

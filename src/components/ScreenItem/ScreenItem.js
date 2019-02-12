@@ -1,8 +1,10 @@
 import React from 'react';
 
+import UsersGrid from '../../containers/UsersGrid/UsersGrid';
+
 import './ScreenItem.css';
 
-class ScreenItem extends React.Component {
+class ScreenItem extends React.PureComponent {
   constructor() {
     super();
     this.referenceCurrentScreen = React.createRef();
@@ -37,8 +39,6 @@ class ScreenItem extends React.Component {
   }
 
   setPropertiesScreenPosition({ row, column }, { height, width }) {
-    console.log(`we have row ${row} and column ${column}, height: ${height} width: ${width} `);
-    console.log(`position should be : ${row * height}, ${column * width}`);
     if (this.referenceCurrentScreen) {
       this.referenceCurrentScreen.current.style.top = `${height * row}px`;
       this.referenceCurrentScreen.current.style.left = `${width * column}px`;
@@ -50,9 +50,10 @@ class ScreenItem extends React.Component {
   render() {
     return (
       <section className="screen--item" ref={this.referenceCurrentScreen}>
-        <p style={{ margin: `0px`, padding: '0px' }}>{`${this.props.positions.row} ${
-          this.props.positions.column
-        }`}</p>
+        <UsersGrid />
+        {/* <p style={{ margin: `0px`, padding: '0px' }}>
+          {`${this.props.positions.row} ${this.props.positions.column}`}
+        </p> */}
       </section>
     );
   }

@@ -1,0 +1,10 @@
+.screen--item {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  /* For testing, delete after */
+  background-color: cornflowerblue;
+}
